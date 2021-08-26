@@ -26,7 +26,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common import exceptions
 from pdlearn import globalvar as gl
-
+from pyzbar import pyzbar
+import io
+from PIL import Image
 import base64  # 解码二维码图片
 #from pdlearn.qywx import WeChat  # 使用微信发送二维码图片到手机
 
@@ -138,21 +140,21 @@ class Mydriver:
             self.driver.execute_script('window.scrollTo(document.body.scrollWidth/2 - 200 , 0)')
 
 
+        try: 
+             # 取出iframe中二维码，并发往钉钉
+             if  gl.nohead==True or cfg["addition"]["SendLoginQRcode"] == 1 :
+                 print("二维码将发往钉钉机器人...\n" + "=" * 60)
+                 self.toDingDing()
+        except Exception as e:
+             print("未检测到SendLoginQRcode配置，请手动扫描二维码登陆..."+e)
+
         # try: 
-        #     # 取出iframe中二维码，并发往钉钉
+        #     # 取出iframe中二维码，并发往方糖，拿到的base64没办法直接发钉钉，所以发方糖
         #     if  gl.nohead==True or cfg["addition"]["SendLoginQRcode"] == 1 :
-        #         print("二维码将发往钉钉机器人...\n" + "=" * 60)
-        #         self.toDingDing()
+        #         print("二维码将发往方糖机器人...\n" + "=" * 60)
+        #         self.toFangTang()
         # except Exception as e:
         #     print("未检测到SendLoginQRcode配置，请手动扫描二维码登陆..."+e)
-
-        try: 
-            # 取出iframe中二维码，并发往方糖，拿到的base64没办法直接发钉钉，所以发方糖
-            if  gl.nohead==True or cfg["addition"]["SendLoginQRcode"] == 1 :
-                print("二维码将发往方糖机器人...\n" + "=" * 60)
-                self.toFangTang()
-        except Exception as e:
-            print("未检测到SendLoginQRcode配置，请手动扫描二维码登陆..."+e)
 
         try:
             # 获取二维码图片  # 这一块等待测试完毕再加入代码
@@ -188,6 +190,10 @@ class Mydriver:
                 token=os.getenv('AccessToken')
             ddhandler = FangtangHandler(token)
             ddhandler.ftmsgsend(self.getQRcode())
+    def decode_img(data):
+            img_b64decode = base64.b64decode(data[data.index(';base64,')+8:])
+            decoded = pyzbar.decode(Image.open(io.BytesIO(img_b64decode)))
+            return decoded[0].data.decode("utf-8")
 
     def toDingDing(self):
         if os.getenv('AccessToken')==None:   
@@ -199,8 +205,9 @@ class Mydriver:
         else:
             secret=os.getenv('Secret')
         ddhandler = DingDingHandler(token, secret)
-        ddhandler.ddmsgsend(self.getQRcode())
+        ddhandler.ddmsgsend(self.decode_img( self.getQRcode()))
 
+    
     def getQRcode(self):
         try:
             # 获取iframe内的二维码

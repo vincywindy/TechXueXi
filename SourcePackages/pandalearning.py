@@ -60,7 +60,7 @@ if __name__ == '__main__':
     print(cfg['base']['ModeText'] + '\n' + "=" * 60) # 模式提示文字请在 ./config/default_template.conf 处修改。
     nohead, lock, stime = get_argv()
     if nohead==True:
-        TechXueXi_mode=3
+        TechXueXi_mode="3"
     else:    
         try:
             if cfg["base"]["ModeType"]:

@@ -5,7 +5,7 @@ RUN apt-get update
 RUN apt-get install -y wget unzip libzbar0 git
 ENV AccessToken=
 ENV Secret=
-ENV Nohead=TRUE
+ENV Nohead=True
 ENV Sourcepath=https://github.com/vincywindy/TechXueXi.git
 # RUN rm -f /xuexi/config/*; ls -la
 COPY requirements.txt /xuexi/requirements.txt

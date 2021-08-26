@@ -21,4 +21,4 @@ WORKDIR /xuexi/code
 RUN git clone $Sourcepath
 RUN chmod +x run.sh
 WORKDIR /xuexi
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["/bin/bash", "/run.sh"]

@@ -31,7 +31,10 @@ import io
 from PIL import Image
 import base64  # 解码二维码图片
 #from pdlearn.qywx import WeChat  # 使用微信发送二维码图片到手机
-
+def decode_img(data):
+    img_b64decode = base64.b64decode(data[data.index(';base64,')+8:])
+    decoded = pyzbar.decode(Image.open(io.BytesIO(img_b64decode)))
+    return decoded[0].data.decode("utf-8")
 
 class title_of_login:
     def __call__(self, driver):
@@ -190,10 +193,7 @@ class Mydriver:
                 token=os.getenv('AccessToken')
             ddhandler = FangtangHandler(token)
             ddhandler.ftmsgsend(self.getQRcode())
-    def decode_img(data):
-            img_b64decode = base64.b64decode(data[data.index(';base64,')+8:])
-            decoded = pyzbar.decode(Image.open(io.BytesIO(img_b64decode)))
-            return decoded[0].data.decode("utf-8")
+
 
     def toDingDing(self):
         if os.getenv('AccessToken')==None:   
@@ -205,7 +205,7 @@ class Mydriver:
         else:
             secret=os.getenv('Secret')
         ddhandler = DingDingHandler(token, secret)
-        ddhandler.ddmsgsend(self.decode_img( self.getQRcode()))
+        ddhandler.ddmsgsend(decode_img(self.getQRcode()))
 
     
     def getQRcode(self):

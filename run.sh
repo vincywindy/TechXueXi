@@ -1,5 +1,10 @@
 #!/bin/sh
 cd code
+cd TechXueXi
+echo "检查更新"
 git pull
-cp -r TechXueXi\SourcePackages ..
+echo "检查更新完毕"
+cd ..
+cp -r TechXueXi/SourcePackages/* ..
+cd ..
 python pandalearning.py

@@ -9,7 +9,7 @@ FROM arm64v8/python:3.7-slim
 COPY --from=builder qemu-aarch64-static /usr/bin
 
 RUN apt-get update
-RUN apt-get install -y wget unzip libzbar0 chromium-driver; chromedriver --version; which chromedriver; chromium --version; git
+RUN apt-get install -y wget unzip libzbar0 git chromium-driver; chromedriver --version; which chromedriver; chromium --version
 ENV AccessToken=
 ENV Secret=
 ENV Nohead=True

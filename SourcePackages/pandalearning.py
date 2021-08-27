@@ -41,6 +41,7 @@ def get_argv():
 
 
 if __name__ == '__main__':
+    nohead, lock, stime = get_argv()
     #  0 读取版本信息
     start_time = time.time()
     if(cfg['display']['banner'] != False): # banner文本直接硬编码，不要放在conf中
@@ -58,7 +59,7 @@ if __name__ == '__main__':
     user.refresh_all_cookies()
     print("=" * 60, '''\nTechXueXi 现支持以下模式（答题时请值守电脑旁处理少部分不正常的题目）：''')
     print(cfg['base']['ModeText'] + '\n' + "=" * 60) # 模式提示文字请在 ./config/default_template.conf 处修改。
-    nohead, lock, stime = get_argv()
+
     if nohead==True:
         TechXueXi_mode="3"
     else:    

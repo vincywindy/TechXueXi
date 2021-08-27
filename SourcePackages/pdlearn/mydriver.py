@@ -29,6 +29,7 @@ from pdlearn import globalvar as gl
 from pyzbar import pyzbar
 import io
 from PIL import Image
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import base64  # 解码二维码图片
 #from pdlearn.qywx import WeChat  # 使用微信发送二维码图片到手机
 def decode_img(data):
@@ -62,6 +63,7 @@ class Mydriver:
                 self.options.add_argument('--disable-extensions')
                 self.options.add_argument('--disable-gpu')
                 self.options.add_argument('--no-sandbox')
+                selenium.webdriver.DesiredCapabilities.FIREFOX["unexpectedAlertBehaviour"] = "accept"
                 self.options.add_argument('--disable-software-rasterizer')  # 解决GL报错问题
             self.options.add_argument('--mute-audio')  # 关闭声音
             # self.options.add_argument('--window-size=400,500')

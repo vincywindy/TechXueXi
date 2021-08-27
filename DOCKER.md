@@ -1,6 +1,6 @@
 # Docker运行命令
 ```shell
-docker run -e "AccessToken={钉钉的token}" -e "Secret={钉钉机器人的密钥}" -d --name=xuexitest {镜像}
+docker run -e "AccessToken={钉钉的token}" -e "Secret={钉钉机器人的密钥}" -d --name={容器名称} {镜像}
 ```
 参数
 AccessToken=钉钉的token

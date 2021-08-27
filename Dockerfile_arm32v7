@@ -4,7 +4,7 @@ RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 FROM arm32v7/python:3.7-slim
 COPY --from=builder qemu-arm-static /usr/bin  
 RUN apt-get update
-RUN apt-get install -y wget unzip libzbar0 git chromium-driver; chromedriver --version; which chromedriver; chromium --version
+RUN apt-get install -y wget unzip libzbar0 git chromium-chromedriver; chromium-chromedriver --version; which chromium-chromedriver; chromium --version
 ENV AccessToken=
 ENV Secret=
 ENV Nohead=True

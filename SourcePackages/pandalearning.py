@@ -102,8 +102,9 @@ if __name__ == '__main__':
         if TechXueXi_mode in ["2", "3"]:
             print('开始每周答题……')
             weekly(cookies, scores, driver_default=driver_default)
-            print('开始专项答题……')
-            zhuanxiang(cookies, scores, driver_default=driver_default)
+            if nohead!=True:
+                print('开始专项答题……')
+                zhuanxiang(cookies, scores, driver_default=driver_default)
         try:
             driver_default.quit()
         except Exception as e:

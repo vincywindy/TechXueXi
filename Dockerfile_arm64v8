@@ -10,6 +10,7 @@ COPY --from=builder qemu-aarch64-static /usr/bin
 
 RUN apt-get update
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
+ENV TZ=Asia/Shanghai
 ENV AccessToken=
 ENV Secret=
 ENV Nohead=True

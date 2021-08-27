@@ -3,6 +3,7 @@ FROM python:3.7-slim
 
 RUN apt-get update
 RUN apt-get install -y wget unzip libzbar0 git cron
+ENV TZ=Asia/Shanghai
 ENV AccessToken=
 ENV Secret=
 ENV Nohead=True
